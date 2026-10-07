@@ -66,6 +66,18 @@
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
+
+  services.earlyoom = {
+    enable = true;
+    freeSwapThreshold = 10;
+    freeMemThreshold = 5;
+  };
+
   console.keyMap = "de-latin1";
   programs.steam = {
     enable = true;
@@ -154,7 +166,14 @@
     anki
     blackbird
     tcpdump
+    mg
   ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   services.xserver = {
     enable = true;
     desktopManager = {
@@ -163,13 +182,16 @@
     };
   };
 
+  services.emacs = {
+    enable = true;
+  };
+
   services.displayManager.defaultSession = "xfce";
 
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -180,5 +202,4 @@
   system.copySystemConfiguration = true;
 
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }

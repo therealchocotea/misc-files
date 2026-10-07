@@ -19,32 +19,41 @@ in
       };
     };
 
-    programs.vim = {
+    programs.emacs = {
       enable = true;
-      defaultEditor = true;
-      packageConfigurable = pkgs.vim-full;
+      extraPackages = epkgs: [
+        epkgs.magit
+        epkgs.use-package
+        epkgs.sly
+        epkgs.forth-mode
+        epkgs.web-mode
+        epkgs.json-mode
+        epkgs.format-all
+        epkgs.zenburn-theme
+      ];
       extraConfig = ''
-        set mouse=a
-        set visualbell
-        set errorbells
-        set cindent
-        set spell
-        set textwidth=72
-        set confirm
-        set number
-        set linebreak
-        set snowbreak=$
-        set showmatch
-        set hlsearch
-        set autoindent
-        set shiftwidth=2
-        set smartindent
-        set smarttab
-        set softtabstop=2
-        set ruler
-        set undolevels=1000
-        set backspace=indent,eol,start
-      '';
+        	(load-theme 'zenburn t)
+        	(scroll-bar-mode 0)
+        	(tool-bar-mode 0)
+        	(show-paren-mode 2)
+        	(electric-pair-mode 1)
+
+
+        	(setq-default tab-width 4
+                      truncate-lines t
+                      fill-column 72
+                      indent-tabs-mode nil)
+
+        (setq show-paren-style 'parenthesis
+              global-hl-line-sticky-flag t
+              display-line-numbers-type 'relative
+              electric-indent-mode nil
+              make-backup-files nil
+              history-length 2000
+              whitespace-line-column 72)
+
+        (global-display-line-numbers-mode t)
+        	'';
     };
 
   };
